@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExpenseProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Configuration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ConfigKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ConfigDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Expense">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Created_User" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="RejectDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ExpenseHistories" Relationship="Self.FK__ExpenseHi__Expen__07C12930" FromRole="Expense" ToRole="ExpenseHistory" />
+    <NavigationProperty Name="ExpenseItems" Relationship="Self.FK__ExpenseIt__Expen__628FA481" FromRole="Expense" ToRole="ExpenseItems" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Expense_Person" FromRole="Expense" ToRole="Users" />
+    <NavigationProperty Name="ExpenseStatus" Relationship="Self.FK_Expenses_ExpenseStatus" FromRole="Expense" ToRole="ExpenseStatuses" />
+  </EntityType>
+  <EntityType Name="ExpenseHistory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ExpenseId" Type="Int32" Nullable="false" />
+    <Property Name="StatusId" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedUser" Type="Int32" Nullable="false" />
+    <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+    <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Expense" Relationship="Self.FK__ExpenseHi__Expen__07C12930" FromRole="ExpenseHistory" ToRole="Expense" />
+    <NavigationProperty Name="User" Relationship="Self.FK__ExpenseHi__Creat__09A971A2" FromRole="ExpenseHistory" ToRole="Users" />
+    <NavigationProperty Name="User1" Relationship="Self.FK__ExpenseHi__Modif__0A9D95DB" FromRole="ExpenseHistory" ToRole="Users" />
+    <NavigationProperty Name="ExpenseStatus" Relationship="Self.FK__ExpenseHi__Statu__08B54D69" FromRole="ExpenseHistory" ToRole="ExpenseStatuses" />
+  </EntityType>
+  <EntityType Name="ExpenseItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="ExpenseId" Type="Int32" Nullable="false" />
+    <Property Name="ExpenseDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ExpenseAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Expense" Relationship="Self.FK__ExpenseIt__Expen__628FA481" FromRole="ExpenseItems" ToRole="Expense" />
+  </EntityType>
+  <EntityType Name="ExpenseStatus">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="StatusDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Expenses" Relationship="Self.FK_Expenses_ExpenseStatus" FromRole="ExpenseStatuses" ToRole="Expense" />
+    <NavigationProperty Name="ExpenseHistories" Relationship="Self.FK__ExpenseHi__Statu__08B54D69" FromRole="ExpenseStatuses" ToRole="ExpenseHistory" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Thread" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Logger" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+    <Property Name="Exception" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="RoleDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Person__RoleId__6754599E" FromRole="UserRoles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Expenses" Relationship="Self.FK_Expense_Person" FromRole="Users" ToRole="Expense" />
+    <NavigationProperty Name="ExpenseHistories" Relationship="Self.FK__ExpenseHi__Creat__09A971A2" FromRole="Users" ToRole="ExpenseHistory" />
+    <NavigationProperty Name="ExpenseHistories1" Relationship="Self.FK__ExpenseHi__Modif__0A9D95DB" FromRole="Users" ToRole="ExpenseHistory" />
+    <NavigationProperty Name="UserRole" Relationship="Self.FK__Person__RoleId__6754599E" FromRole="Users" ToRole="UserRoles" />
+  </EntityType>
+  <Association Name="FK__ExpenseHi__Expen__07C12930">
+    <End Role="Expense" Type="Self.Expense" Multiplicity="1" />
+    <End Role="ExpenseHistory" Type="Self.ExpenseHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Expense">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ExpenseHistory">
+        <PropertyRef Name="ExpenseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExpenseIt__Expen__628FA481">
+    <End Role="Expense" Type="Self.Expense" Multiplicity="1" />
+    <End Role="ExpenseItems" Type="Self.ExpenseItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Expense">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ExpenseItems">
+        <PropertyRef Name="ExpenseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_Person">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Expense">
+        <PropertyRef Name="Created_User" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expenses_ExpenseStatus">
+    <End Role="ExpenseStatuses" Type="Self.ExpenseStatus" Multiplicity="1" />
+    <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseStatuses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Expense">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExpenseHi__Creat__09A971A2">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="ExpenseHistory" Type="Self.ExpenseHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ExpenseHistory">
+        <PropertyRef Name="CreatedUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExpenseHi__Modif__0A9D95DB">
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="ExpenseHistory" Type="Self.ExpenseHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ExpenseHistory">
+        <PropertyRef Name="ModifiedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ExpenseHi__Statu__08B54D69">
+    <End Role="ExpenseStatuses" Type="Self.ExpenseStatus" Multiplicity="1" />
+    <End Role="ExpenseHistory" Type="Self.ExpenseHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseStatuses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ExpenseHistory">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Person__RoleId__6754599E">
+    <End Role="UserRoles" Type="Self.UserRole" Multiplicity="1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRoles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ExpenseProjectDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Configurations" EntityType="Self.Configuration" />
+    <EntitySet Name="Expenses" EntityType="Self.Expense" />
+    <EntitySet Name="ExpenseHistories" EntityType="Self.ExpenseHistory" />
+    <EntitySet Name="ExpenseItems" EntityType="Self.ExpenseItem" />
+    <EntitySet Name="ExpenseStatuses" EntityType="Self.ExpenseStatus" />
+    <EntitySet Name="Logs" EntityType="Self.Log" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK__ExpenseHi__Expen__07C12930" Association="Self.FK__ExpenseHi__Expen__07C12930">
+      <End Role="Expense" EntitySet="Expenses" />
+      <End Role="ExpenseHistory" EntitySet="ExpenseHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExpenseIt__Expen__628FA481" Association="Self.FK__ExpenseIt__Expen__628FA481">
+      <End Role="Expense" EntitySet="Expenses" />
+      <End Role="ExpenseItems" EntitySet="ExpenseItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_Person" Association="Self.FK_Expense_Person">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Expense" EntitySet="Expenses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expenses_ExpenseStatus" Association="Self.FK_Expenses_ExpenseStatus">
+      <End Role="ExpenseStatuses" EntitySet="ExpenseStatuses" />
+      <End Role="Expense" EntitySet="Expenses" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExpenseHi__Creat__09A971A2" Association="Self.FK__ExpenseHi__Creat__09A971A2">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ExpenseHistory" EntitySet="ExpenseHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExpenseHi__Modif__0A9D95DB" Association="Self.FK__ExpenseHi__Modif__0A9D95DB">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ExpenseHistory" EntitySet="ExpenseHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ExpenseHi__Statu__08B54D69" Association="Self.FK__ExpenseHi__Statu__08B54D69">
+      <End Role="ExpenseStatuses" EntitySet="ExpenseStatuses" />
+      <End Role="ExpenseHistory" EntitySet="ExpenseHistories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Person__RoleId__6754599E" Association="Self.FK__Person__RoleId__6754599E">
+      <End Role="UserRoles" EntitySet="UserRoles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(ExpenseProjectDBModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(ExpenseProjectDBModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

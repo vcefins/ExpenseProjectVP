@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+
+<aside id="left-panel">
+
+    <!-- User info -->
+    <div class="login-info" style="text-align: left;">
+        <span>
+            <!-- User image size is adjusted inside CSS, it should stay as it -->
+            @*<img src="~/Content/img/avatars/male.png" alt="me" class="online" />*@
+            <span style="font-size: 22px; margin-bottom: 10px; margin-top: 30px;">
+                @Session["Name"] @Session["Surname"]
+            </span>
+
+        </span>
+    </div>
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive-->
+    <nav style="padding-top: 100px;">
+        <ul>
+            <li>
+                <a href="/Expense/Index" title="Home"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Expense List</span></a>
+            </li>
+            @if (Session["RoleID"].ToString() == "1")
+            {
+            <li>
+                <a href="/Expense/Create/0" title="New Expense Form"><i class="fa fa-lg fa-fw fa-plus"></i> <span class="menu-item-parent">Create New Form</span></a>
+            </li>
+            }
+        </ul>
+    </nav>
+</aside>

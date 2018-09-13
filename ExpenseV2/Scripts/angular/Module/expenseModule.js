@@ -1,0 +1,1 @@
+﻿var app = angular.module('expenseModule', []);  //not to repeat this in every ng-controller (P.S Call this at the bottom of every necessary View)

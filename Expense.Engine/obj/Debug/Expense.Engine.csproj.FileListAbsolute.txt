@@ -1,0 +1,7 @@
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\obj\Debug\Expense.Engine.csprojResolveAssemblyReference.cache
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\bin\Debug\Expense.Engine.dll
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\bin\Debug\Expense.Engine.pdb
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\bin\Debug\Expense.Data.dll
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\bin\Debug\Expense.Data.pdb
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\obj\Debug\Expense.Engine.dll
+C:\Users\viktor.inselberg\Documents\Visual Studio 2015\Projects\ExpenseV2\Expense.Engine\obj\Debug\Expense.Engine.pdb

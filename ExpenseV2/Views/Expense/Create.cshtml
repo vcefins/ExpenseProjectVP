@@ -1,0 +1,191 @@
+﻿@model ExpenseV2.Models.ExpenseIdModel
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+
+    <title> SmartAdmin </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Basic Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/font-awesome.min.css">
+
+    <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-skins.min.css">
+
+    <!-- SmartAdmin RTL Support -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-rtl.min.css">
+
+    <!-- We recommend you use "your_style.css" to override SmartAdmin
+         specific styles this will also ensure you retrain your customization with each SmartAdmin update.
+    <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
+    <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/demo.min.css">
+
+    <!-- FAVICONS -->
+    <link rel="shortcut icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- GOOGLE FONT -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <!-- Specifying a Webpage Icon for Web Clip
+         Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
+    <link rel="apple-touch-icon" href="~/Content/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/Content/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/Content/img/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+
+</head>
+
+<body ng-controller="expenseCreateController">
+    <!-- widget div-->
+    <div style="margin-top : 20px; margin-left:5px;">
+        <!-- widget grid -->
+        <section id="widget-grid" class="">
+
+            <!-- START ROW -->
+            <div class="row">
+
+                <!-- NEW COL START -->
+                <article class="col-sm-12 col-md-12 col-lg-12">
+
+                    <!-- Widget ID (each widget will need unique ID)-->
+                    <div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false">
+
+
+                        <header>
+                            <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                            <h2> Expense Form </h2>
+                            <a class="btn bg-color-blue txt-color-white" style="position: absolute; right: 0;" ng-click="addItem()"><i class="fa fa-plus"></i> </a>  <!-- Add Item Button -->
+                        </header>
+
+                        <!-- widget div-->
+                        <div>
+
+                            <!-- widget edit box -->
+                            <div class="jarviswidget-editbox">
+                                <!-- This area used as dropdown edit box -->
+
+                            </div>
+                            <!-- end widget edit box -->
+
+                            <div class="widget-body no-padding">
+
+                                <form class="smart-form">
+                                    @*<header>
+                                            Responsive grid system
+                                        </header>*@
+
+                                    <fieldset ng-repeat="expenseItem in expenseItemList track by $index">
+                                        <div class="row">
+                                            <section class="col col-3">
+                                                <label class="input">
+                                                    <input type="number" placeholder="Amount" ng-model="expenseItem.ExpenseItemAmount">
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label class="input">
+                                                    <input type="text" placeholder="Description" ng-model="expenseItem.ExpenseItemDescription">
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label class="input">
+                                                    <i class="icon-append fa fa-calendar"></i>
+                                                    <input type="date" placeholder="Date" ng-model="expenseItem.ExpenseItemDate" class="datepicker"/>
+                                                </label>
+                                            </section>
+                                            <section class="col col-3">
+                                                <label class="input">
+                                                    <a ng-click="deleteItem($index)" class="btn btn-danger btn-circle"><i class="fa fa-remove"></i></a>
+                                                </label>
+                                            </section>
+                                        </div>
+                                    </fieldset>
+                                    <footer>
+                                        <input type="button" value="Submit" class="btn btn-primary" ng-show="@Session["RoleID"] == 1 " ng-click="submitExpense()" />  <!-- Employee Only 'Submit' Button -->
+
+                                        <button type="submit" class="btn btn-success" ng-hide="@Session["RoleID"] == 1" ng-click="evaluateExpense(true)"> <!-- Manager & Accountant 'Accept' Button -->                                            
+                                            Accept
+                                        </button>
+                                        <button type="submit" class="btn bg-color-redLight txt-color-white" ng-hide="@Session["RoleID"] == 1" ng-click="showRejectDesc()"> <!-- Manager & Accountant 'Decline' Button -->
+                                            Decline
+                                        </button>
+                                        <button type="button" class="btn btn-default" onclick="window.history.back();">
+                                            Back
+                                        </button>
+                                    </footer>
+                                    <div ng-show="showReject">
+                                        <!-- Reject Description -->
+                                        <header>
+                                            <span class="widget-icon"></span>
+                                            <h2> Reject Description </h2>
+                                        </header>
+                                        <fieldset>
+
+                                            <section>
+                                                <label class="input">
+                                                    <input type="text" placeholder="..." ng-model="rejectReason">
+                                                </label>
+                                                <div class="note">
+                                                    <strong>Note:</strong> Enter the reason to why you are declining the expense proposal.
+                                                </div>
+                                            </section>
+                                        </fieldset>
+                                        <footer>        
+                                            <button type="submit" class="btn bg-color-redLight txt-color-white" ng-hide="@Session["RoleID"] == 1" ng-click="evaluateExpense(false, rejectReason)">
+                                                <!-- Manager & Accountant 'Decline' Button -->
+                                                Submit
+                                            </button>
+                                        </footer>
+                                    </div>   <!-- Reject Description End -->
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <script type="text/javascript">
+        var sessionModel = { userID : @Session["ID"], roleID : @Session["RoleID"] };    //Sends Session Info to ng Controller
+        var expenseId = @Model.ExpenseID;   //Sends Expense ID to ng Controller
+
+        var actionUrls = {
+            getExpensesByExpenseID: "@Url.RouteUrl("DefaultApi", new { httpRoute ="", controller ="Expense", action = "GetExpensesByExpenseID" })",
+            submitExpenseToDatabase: "@Url.RouteUrl("DefaultApi", new { httpRoute ="", controller ="Expense", action = "SaveExpense" })",
+            evaluateExpense: "@Url.RouteUrl("DefaultApi", new { httpRoute ="", controller ="Expense", action = "EvaluateExpense" })"
+        };
+    </script>
+
+
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/angular/Controller/expenseCreateController.js"></script>
+</body>
+
+</html>

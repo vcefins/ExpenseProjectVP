@@ -1,0 +1,224 @@
+﻿@model ExpenseV2.ViewModels.ExpenseListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
+
+    <title> SmartAdmin </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Basic Styles -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/font-awesome.min.css">
+
+    <!-- SmartAdmin Styles : Caution! DO NOT change the order -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production-plugins.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-production.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-skins.min.css">
+
+    <!-- SmartAdmin RTL Support -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/smartadmin-rtl.min.css">
+
+    <!-- We recommend you use "your_style.css" to override SmartAdmin
+         specific styles this will also ensure you retrain your customization with each SmartAdmin update.
+    <link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
+    <!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/Content/css/demo.min.css">
+
+    <!-- FAVICONS -->
+    <link rel="shortcut icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="~/Content/img/favicon/favicon.ico" type="image/x-icon">
+
+    <!-- GOOGLE FONT -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <!-- Specifying a Webpage Icon for Web Clip
+         Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html -->
+    <link rel="apple-touch-icon" href="~/Content/img/splash/sptouch-icon-iphone.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/Content/img/splash/touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/Content/img/splash/touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/Content/img/splash/touch-icon-ipad-retina.png">
+
+    <!-- iOS web-app metas : hides Safari UI Components and Changes Status Bar Appearance -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <!-- Startup image for web apps -->
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-landscape.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/ipad-portrait.png" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
+    <link rel="apple-touch-startup-image" href="~/Content/img/splash/iphone.png" media="screen and (max-device-width: 320px)">
+</head>
+
+<body>
+
+
+    <div id="content">
+
+        <!-- row -->
+        <div class="row">
+
+            <!-- col -->
+            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+                <h1 class="page-title txt-color-blueDark">
+
+
+
+                    <i class="fa-fw fa fa-cubes"></i>
+
+                    <a href="/Expense/Index">Expense List</a>
+
+                </h1>
+            </div>
+            <!-- end col -->
+            <!-- right side of the page with the sparkline graphs -->
+            <!-- col -->
+            <!-- end col -->
+
+        </div>
+        <!-- end row -->
+
+        <style type="text/css">
+            #formerUserDdl {
+                width: 300px;
+            }
+
+            #newUserDdl {
+                width: 300px;
+            }
+
+            #projectDdl {
+                width: 300px;
+            }
+        </style>
+
+
+
+        <section id="widget-grid" class="ng-scope" ng-controller="expenseInfoController" ng-show="@Session["RoleID"] == 1">
+            <!-- Rejected Expense Table for Employee (will be hidden in other role accounts) -->
+
+            <div class="jarviswidget jarviswidget-color-redLight jarviswidget-collapsed" data-widget-attstyle="jarviswidget-color-redLight" data-widget-collapsed="true" data-widget-fullscreenbutton="false" role="widget">
+                <header role="heading" style="background-color: #de6515; outline-color	: #de6515">
+                    <div class="jarviswidget-ctrls" role="menu"></div>
+                    <span class="widget-icon"><i class="fa fa-cubes"></i></span>
+                    <h2> Your Rejected Expenses </h2>
+                    <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                </header>
+
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table width="100%" cellspacing="0" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" role="grid" style="width: 100%;">
+                        <thead>
+                            <tr role="row">     <!-- Rejected Expenses Table Column Headers -->
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Owner Name">Name</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Owner Surname">Surname</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Status">Status</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Created Date">Created Date</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Last Modified Date">Last Modified</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Total Amount">Total Amount</th>
+
+                                <th class="col-xs-1" tabindex="0" rowspan="1" colspan="1" aria-label="Details Button"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>         <!-- Rejected Expenses Table Data Columns -->
+                            <tr role="row" ng-repeat="expenseInfo in expenseInfoList" ng-show="expenseInfo.StatusID == 4"> @*to do: look at angular filter*@
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedUserName}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedUserSurname}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.StatusName}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedDate | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.LastModified | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.TotalAmount | currency}}</td>
+                                <td class="col-xs-1" style="text-align:center" tabindex="0" rowspan="1" colspan="1">
+                                    <a class="btn btn-primary" ng-href="/Expense/Create/{{expenseInfo.ID}}">Details</a>                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>  <!-- End of Rejected Expenses Table -->
+        <section id="widget-grid" style="margin-top: 20px">
+            <!-- General Expense Table (concerning its respective user /w role) -->
+
+            <div class="jarviswidget jarviswidget-color-redLight jarviswidget-collapsed" data-widget-attstyle="jarviswidget-color-redLight" data-widget-collapsed="true" data-widget-fullscreenbutton="false" role="widget">
+                <header role="heading" style="background-color: #de6515; outline-color	: #de6515">
+                    <div class="jarviswidget-ctrls" role="menu"></div>
+                    <span class="widget-icon"><i class="fa fa-cubes"></i></span>
+                    <h2> Your Previous Expenses </h2>
+                    <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                </header>
+
+            </div>
+            <div class="row" ng-controller="expenseInfoController">
+                <!-- Previous Expenses Table-->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <table width="100%" cellspacing="0" class="display projects-table table table-striped table-bordered table-hover dataTable no-footer" role="grid" style="width: 100%;">
+                        <thead>
+                            <tr role="row">     <!-- Expense Table Column Headers -->
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Owner Name">Name</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Owner Surname">Surname</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Status">Status</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Created Date">Created Date</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Last Modified Date">Last Modified</th>
+
+                                <th class="col-xs-2" tabindex="0" rowspan="1" colspan="1" aria-label="Total Amount">Total Amount</th>
+
+                                <th class="col-xs-1" tabindex="0" rowspan="1" colspan="1" aria-label="Details Button"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>         <!-- Expense Table Data Columns -->
+                            <tr role="row" ng-repeat="expenseInfo in expenseInfoList">
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedUserName}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedUserSurname}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.StatusName}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.CreatedDate | date:"dd/MM/yyyy 'at' HH:mm"}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.ModifiedDate | date:"dd/MM/yyyy 'at' HH:mm"}}</td>
+                                <td class="col-xs-2" tabindex="0" rowspan="1" colspan="1">{{expenseInfo.TotalAmount | currency}}</td>
+                                <td class="col-xs-1" style="text-align:center" tabindex="0" rowspan="1" colspan="1">
+                                    <a class="btn btn-primary" ng-href="/Expense/Create/{{expenseInfo.ID}}">Details</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+        </section> <!-- End of General Concerning Expenses Table -->
+    </div>
+
+    <script src="~/Scripts/angular/Controller/expenseInfoController.js"></script>
+    <script type="text/javascript">
+
+        var sessionModel = { userID : @Session["ID"], roleID : @Session["RoleID"] };
+
+        var actionUrls = {
+            getExpensesByUserID: "@Url.RouteUrl("DefaultApi", new { httpRoute ="", controller ="Expense", action = "GetExpensesByUserID" })"
+        };
+    </script>
+</body>
+
+</html>
+
+
